@@ -177,6 +177,9 @@ var (
 			return {{$contract.Type}}{{.Normalized.Name}}EventName
 		}
 
+		// Err{{.Normalized.Name}}SignatureMismatch is returned when the event signature does not match the expected signature.
+		var Err{{.Normalized.Name}}SignatureMismatch = errors.New("event signature mismatch")
+
 		// Unpack{{.Normalized.Name}}Event is the Go binding that unpacks the event data emitted
 		// by contract.
 		//
@@ -184,7 +187,7 @@ var (
 		func ({{ decapitalise $contract.Type}} *{{$contract.Type}}) Unpack{{.Normalized.Name}}Event(log *types.Log) (*{{$contract.Type}}{{.Normalized.Name}}, error) {
 			event := "{{.Original.Name}}"
 			if len(log.Topics) == 0 || log.Topics[0] != {{ decapitalise $contract.Type}}.abi.Events[event].ID {
-				return nil, errors.New("event signature mismatch")
+				return nil, Err{{.Normalized.Name}}SignatureMismatch
 			}
 			out := new({{$contract.Type}}{{.Normalized.Name}})
 			if len(log.Data) > 0 {

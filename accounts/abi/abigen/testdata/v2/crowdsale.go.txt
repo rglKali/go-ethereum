@@ -354,6 +354,9 @@ func (CrowdsaleFundTransfer) ContractEventName() string {
 	return CrowdsaleFundTransferEventName
 }
 
+// ErrFundTransferSignatureMismatch is returned when the event signature does not match the expected signature.
+var ErrFundTransferSignatureMismatch = errors.New("event signature mismatch")
+
 // UnpackFundTransferEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
@@ -361,7 +364,7 @@ func (CrowdsaleFundTransfer) ContractEventName() string {
 func (crowdsale *Crowdsale) UnpackFundTransferEvent(log *types.Log) (*CrowdsaleFundTransfer, error) {
 	event := "FundTransfer"
 	if len(log.Topics) == 0 || log.Topics[0] != crowdsale.abi.Events[event].ID {
-		return nil, errors.New("event signature mismatch")
+		return nil, ErrFundTransferSignatureMismatch
 	}
 	out := new(CrowdsaleFundTransfer)
 	if len(log.Data) > 0 {

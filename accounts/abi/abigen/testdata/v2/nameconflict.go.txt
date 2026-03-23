@@ -128,6 +128,9 @@ func (NameConflictLog) ContractEventName() string {
 	return NameConflictLogEventName
 }
 
+// ErrLogSignatureMismatch is returned when the event signature does not match the expected signature.
+var ErrLogSignatureMismatch = errors.New("event signature mismatch")
+
 // UnpackLogEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
@@ -135,7 +138,7 @@ func (NameConflictLog) ContractEventName() string {
 func (nameConflict *NameConflict) UnpackLogEvent(log *types.Log) (*NameConflictLog, error) {
 	event := "log"
 	if len(log.Topics) == 0 || log.Topics[0] != nameConflict.abi.Events[event].ID {
-		return nil, errors.New("event signature mismatch")
+		return nil, ErrLogSignatureMismatch
 	}
 	out := new(NameConflictLog)
 	if len(log.Data) > 0 {

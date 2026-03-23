@@ -187,6 +187,9 @@ func (TupleTupleEvent) ContractEventName() string {
 	return TupleTupleEventEventName
 }
 
+// ErrTupleEventSignatureMismatch is returned when the event signature does not match the expected signature.
+var ErrTupleEventSignatureMismatch = errors.New("event signature mismatch")
+
 // UnpackTupleEventEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
@@ -194,7 +197,7 @@ func (TupleTupleEvent) ContractEventName() string {
 func (tuple *Tuple) UnpackTupleEventEvent(log *types.Log) (*TupleTupleEvent, error) {
 	event := "TupleEvent"
 	if len(log.Topics) == 0 || log.Topics[0] != tuple.abi.Events[event].ID {
-		return nil, errors.New("event signature mismatch")
+		return nil, ErrTupleEventSignatureMismatch
 	}
 	out := new(TupleTupleEvent)
 	if len(log.Data) > 0 {
@@ -228,6 +231,9 @@ func (TupleTupleEvent2) ContractEventName() string {
 	return TupleTupleEvent2EventName
 }
 
+// ErrTupleEvent2SignatureMismatch is returned when the event signature does not match the expected signature.
+var ErrTupleEvent2SignatureMismatch = errors.New("event signature mismatch")
+
 // UnpackTupleEvent2Event is the Go binding that unpacks the event data emitted
 // by contract.
 //
@@ -235,7 +241,7 @@ func (TupleTupleEvent2) ContractEventName() string {
 func (tuple *Tuple) UnpackTupleEvent2Event(log *types.Log) (*TupleTupleEvent2, error) {
 	event := "TupleEvent2"
 	if len(log.Topics) == 0 || log.Topics[0] != tuple.abi.Events[event].ID {
-		return nil, errors.New("event signature mismatch")
+		return nil, ErrTupleEvent2SignatureMismatch
 	}
 	out := new(TupleTupleEvent2)
 	if len(log.Data) > 0 {

@@ -600,6 +600,9 @@ func (DAOChangeOfRules) ContractEventName() string {
 	return DAOChangeOfRulesEventName
 }
 
+// ErrChangeOfRulesSignatureMismatch is returned when the event signature does not match the expected signature.
+var ErrChangeOfRulesSignatureMismatch = errors.New("event signature mismatch")
+
 // UnpackChangeOfRulesEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
@@ -607,7 +610,7 @@ func (DAOChangeOfRules) ContractEventName() string {
 func (dAO *DAO) UnpackChangeOfRulesEvent(log *types.Log) (*DAOChangeOfRules, error) {
 	event := "ChangeOfRules"
 	if len(log.Topics) == 0 || log.Topics[0] != dAO.abi.Events[event].ID {
-		return nil, errors.New("event signature mismatch")
+		return nil, ErrChangeOfRulesSignatureMismatch
 	}
 	out := new(DAOChangeOfRules)
 	if len(log.Data) > 0 {
@@ -642,6 +645,9 @@ func (DAOMembershipChanged) ContractEventName() string {
 	return DAOMembershipChangedEventName
 }
 
+// ErrMembershipChangedSignatureMismatch is returned when the event signature does not match the expected signature.
+var ErrMembershipChangedSignatureMismatch = errors.New("event signature mismatch")
+
 // UnpackMembershipChangedEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
@@ -649,7 +655,7 @@ func (DAOMembershipChanged) ContractEventName() string {
 func (dAO *DAO) UnpackMembershipChangedEvent(log *types.Log) (*DAOMembershipChanged, error) {
 	event := "MembershipChanged"
 	if len(log.Topics) == 0 || log.Topics[0] != dAO.abi.Events[event].ID {
-		return nil, errors.New("event signature mismatch")
+		return nil, ErrMembershipChangedSignatureMismatch
 	}
 	out := new(DAOMembershipChanged)
 	if len(log.Data) > 0 {
@@ -686,6 +692,9 @@ func (DAOProposalAdded) ContractEventName() string {
 	return DAOProposalAddedEventName
 }
 
+// ErrProposalAddedSignatureMismatch is returned when the event signature does not match the expected signature.
+var ErrProposalAddedSignatureMismatch = errors.New("event signature mismatch")
+
 // UnpackProposalAddedEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
@@ -693,7 +702,7 @@ func (DAOProposalAdded) ContractEventName() string {
 func (dAO *DAO) UnpackProposalAddedEvent(log *types.Log) (*DAOProposalAdded, error) {
 	event := "ProposalAdded"
 	if len(log.Topics) == 0 || log.Topics[0] != dAO.abi.Events[event].ID {
-		return nil, errors.New("event signature mismatch")
+		return nil, ErrProposalAddedSignatureMismatch
 	}
 	out := new(DAOProposalAdded)
 	if len(log.Data) > 0 {
@@ -730,6 +739,9 @@ func (DAOProposalTallied) ContractEventName() string {
 	return DAOProposalTalliedEventName
 }
 
+// ErrProposalTalliedSignatureMismatch is returned when the event signature does not match the expected signature.
+var ErrProposalTalliedSignatureMismatch = errors.New("event signature mismatch")
+
 // UnpackProposalTalliedEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
@@ -737,7 +749,7 @@ func (DAOProposalTallied) ContractEventName() string {
 func (dAO *DAO) UnpackProposalTalliedEvent(log *types.Log) (*DAOProposalTallied, error) {
 	event := "ProposalTallied"
 	if len(log.Topics) == 0 || log.Topics[0] != dAO.abi.Events[event].ID {
-		return nil, errors.New("event signature mismatch")
+		return nil, ErrProposalTalliedSignatureMismatch
 	}
 	out := new(DAOProposalTallied)
 	if len(log.Data) > 0 {
@@ -774,6 +786,9 @@ func (DAOVoted) ContractEventName() string {
 	return DAOVotedEventName
 }
 
+// ErrVotedSignatureMismatch is returned when the event signature does not match the expected signature.
+var ErrVotedSignatureMismatch = errors.New("event signature mismatch")
+
 // UnpackVotedEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
@@ -781,7 +796,7 @@ func (DAOVoted) ContractEventName() string {
 func (dAO *DAO) UnpackVotedEvent(log *types.Log) (*DAOVoted, error) {
 	event := "Voted"
 	if len(log.Topics) == 0 || log.Topics[0] != dAO.abi.Events[event].ID {
-		return nil, errors.New("event signature mismatch")
+		return nil, ErrVotedSignatureMismatch
 	}
 	out := new(DAOVoted)
 	if len(log.Data) > 0 {

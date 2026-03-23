@@ -109,6 +109,9 @@ func (CBasic1) ContractEventName() string {
 	return CBasic1EventName
 }
 
+// ErrBasic1SignatureMismatch is returned when the event signature does not match the expected signature.
+var ErrBasic1SignatureMismatch = errors.New("event signature mismatch")
+
 // UnpackBasic1Event is the Go binding that unpacks the event data emitted
 // by contract.
 //
@@ -116,7 +119,7 @@ func (CBasic1) ContractEventName() string {
 func (c *C) UnpackBasic1Event(log *types.Log) (*CBasic1, error) {
 	event := "basic1"
 	if len(log.Topics) == 0 || log.Topics[0] != c.abi.Events[event].ID {
-		return nil, errors.New("event signature mismatch")
+		return nil, ErrBasic1SignatureMismatch
 	}
 	out := new(CBasic1)
 	if len(log.Data) > 0 {
@@ -151,6 +154,9 @@ func (CBasic2) ContractEventName() string {
 	return CBasic2EventName
 }
 
+// ErrBasic2SignatureMismatch is returned when the event signature does not match the expected signature.
+var ErrBasic2SignatureMismatch = errors.New("event signature mismatch")
+
 // UnpackBasic2Event is the Go binding that unpacks the event data emitted
 // by contract.
 //
@@ -158,7 +164,7 @@ func (CBasic2) ContractEventName() string {
 func (c *C) UnpackBasic2Event(log *types.Log) (*CBasic2, error) {
 	event := "basic2"
 	if len(log.Topics) == 0 || log.Topics[0] != c.abi.Events[event].ID {
-		return nil, errors.New("event signature mismatch")
+		return nil, ErrBasic2SignatureMismatch
 	}
 	out := new(CBasic2)
 	if len(log.Data) > 0 {

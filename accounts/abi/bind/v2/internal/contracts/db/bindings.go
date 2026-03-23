@@ -270,6 +270,9 @@ func (DBInsert) ContractEventName() string {
 	return DBInsertEventName
 }
 
+// ErrInsertSignatureMismatch is returned when the event signature does not match the expected signature.
+var ErrInsertSignatureMismatch = errors.New("event signature mismatch")
+
 // UnpackInsertEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
@@ -277,7 +280,7 @@ func (DBInsert) ContractEventName() string {
 func (dB *DB) UnpackInsertEvent(log *types.Log) (*DBInsert, error) {
 	event := "Insert"
 	if len(log.Topics) == 0 || log.Topics[0] != dB.abi.Events[event].ID {
-		return nil, errors.New("event signature mismatch")
+		return nil, ErrInsertSignatureMismatch
 	}
 	out := new(DBInsert)
 	if len(log.Data) > 0 {
@@ -312,6 +315,9 @@ func (DBKeyedInsert) ContractEventName() string {
 	return DBKeyedInsertEventName
 }
 
+// ErrKeyedInsertSignatureMismatch is returned when the event signature does not match the expected signature.
+var ErrKeyedInsertSignatureMismatch = errors.New("event signature mismatch")
+
 // UnpackKeyedInsertEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
@@ -319,7 +325,7 @@ func (DBKeyedInsert) ContractEventName() string {
 func (dB *DB) UnpackKeyedInsertEvent(log *types.Log) (*DBKeyedInsert, error) {
 	event := "KeyedInsert"
 	if len(log.Topics) == 0 || log.Topics[0] != dB.abi.Events[event].ID {
-		return nil, errors.New("event signature mismatch")
+		return nil, ErrKeyedInsertSignatureMismatch
 	}
 	out := new(DBKeyedInsert)
 	if len(log.Data) > 0 {
