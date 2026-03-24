@@ -270,17 +270,17 @@ func (DBInsert) ContractEventName() string {
 	return DBInsertEventName
 }
 
-// ErrInsertSignatureMismatch is returned when the event signature does not match the expected signature.
-var ErrInsertSignatureMismatch = errors.New("event signature mismatch")
-
 // UnpackInsertEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
 // Solidity: event Insert(uint256 key, uint256 value, uint256 length)
 func (dB *DB) UnpackInsertEvent(log *types.Log) (*DBInsert, error) {
 	event := "Insert"
-	if len(log.Topics) == 0 || log.Topics[0] != dB.abi.Events[event].ID {
-		return nil, ErrInsertSignatureMismatch
+	if len(log.Topics) == 0 {
+		return nil, bind.ErrNoEventSignature
+	}
+	if log.Topics[0] != dB.abi.Events[event].ID {
+		return nil, bind.ErrEventSignatureMismatch
 	}
 	out := new(DBInsert)
 	if len(log.Data) > 0 {
@@ -315,17 +315,17 @@ func (DBKeyedInsert) ContractEventName() string {
 	return DBKeyedInsertEventName
 }
 
-// ErrKeyedInsertSignatureMismatch is returned when the event signature does not match the expected signature.
-var ErrKeyedInsertSignatureMismatch = errors.New("event signature mismatch")
-
 // UnpackKeyedInsertEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
 // Solidity: event KeyedInsert(uint256 indexed key, uint256 value)
 func (dB *DB) UnpackKeyedInsertEvent(log *types.Log) (*DBKeyedInsert, error) {
 	event := "KeyedInsert"
-	if len(log.Topics) == 0 || log.Topics[0] != dB.abi.Events[event].ID {
-		return nil, ErrKeyedInsertSignatureMismatch
+	if len(log.Topics) == 0 {
+		return nil, bind.ErrNoEventSignature
+	}
+	if log.Topics[0] != dB.abi.Events[event].ID {
+		return nil, bind.ErrEventSignatureMismatch
 	}
 	out := new(DBKeyedInsert)
 	if len(log.Data) > 0 {

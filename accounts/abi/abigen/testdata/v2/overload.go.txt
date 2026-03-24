@@ -108,17 +108,17 @@ func (OverloadBar) ContractEventName() string {
 	return OverloadBarEventName
 }
 
-// ErrBarSignatureMismatch is returned when the event signature does not match the expected signature.
-var ErrBarSignatureMismatch = errors.New("event signature mismatch")
-
 // UnpackBarEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
 // Solidity: event bar(uint256 i)
 func (overload *Overload) UnpackBarEvent(log *types.Log) (*OverloadBar, error) {
 	event := "bar"
-	if len(log.Topics) == 0 || log.Topics[0] != overload.abi.Events[event].ID {
-		return nil, ErrBarSignatureMismatch
+	if len(log.Topics) == 0 {
+		return nil, bind.ErrNoEventSignature
+	}
+	if log.Topics[0] != overload.abi.Events[event].ID {
+		return nil, bind.ErrEventSignatureMismatch
 	}
 	out := new(OverloadBar)
 	if len(log.Data) > 0 {
@@ -153,17 +153,17 @@ func (OverloadBar0) ContractEventName() string {
 	return OverloadBar0EventName
 }
 
-// ErrBar0SignatureMismatch is returned when the event signature does not match the expected signature.
-var ErrBar0SignatureMismatch = errors.New("event signature mismatch")
-
 // UnpackBar0Event is the Go binding that unpacks the event data emitted
 // by contract.
 //
 // Solidity: event bar(uint256 i, uint256 j)
 func (overload *Overload) UnpackBar0Event(log *types.Log) (*OverloadBar0, error) {
 	event := "bar0"
-	if len(log.Topics) == 0 || log.Topics[0] != overload.abi.Events[event].ID {
-		return nil, ErrBar0SignatureMismatch
+	if len(log.Topics) == 0 {
+		return nil, bind.ErrNoEventSignature
+	}
+	if log.Topics[0] != overload.abi.Events[event].ID {
+		return nil, bind.ErrEventSignatureMismatch
 	}
 	out := new(OverloadBar0)
 	if len(log.Data) > 0 {

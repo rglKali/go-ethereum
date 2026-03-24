@@ -187,17 +187,17 @@ func (TupleTupleEvent) ContractEventName() string {
 	return TupleTupleEventEventName
 }
 
-// ErrTupleEventSignatureMismatch is returned when the event signature does not match the expected signature.
-var ErrTupleEventSignatureMismatch = errors.New("event signature mismatch")
-
 // UnpackTupleEventEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
 // Solidity: event TupleEvent((uint256,uint256[],(uint256,uint256)[]) a, (uint256,uint256)[2][] b, (uint256,uint256)[][2] c, (uint256,uint256[],(uint256,uint256)[])[] d, uint256[] e)
 func (tuple *Tuple) UnpackTupleEventEvent(log *types.Log) (*TupleTupleEvent, error) {
 	event := "TupleEvent"
-	if len(log.Topics) == 0 || log.Topics[0] != tuple.abi.Events[event].ID {
-		return nil, ErrTupleEventSignatureMismatch
+	if len(log.Topics) == 0 {
+		return nil, bind.ErrNoEventSignature
+	}
+	if log.Topics[0] != tuple.abi.Events[event].ID {
+		return nil, bind.ErrEventSignatureMismatch
 	}
 	out := new(TupleTupleEvent)
 	if len(log.Data) > 0 {
@@ -231,17 +231,17 @@ func (TupleTupleEvent2) ContractEventName() string {
 	return TupleTupleEvent2EventName
 }
 
-// ErrTupleEvent2SignatureMismatch is returned when the event signature does not match the expected signature.
-var ErrTupleEvent2SignatureMismatch = errors.New("event signature mismatch")
-
 // UnpackTupleEvent2Event is the Go binding that unpacks the event data emitted
 // by contract.
 //
 // Solidity: event TupleEvent2((uint8,uint8)[] arg0)
 func (tuple *Tuple) UnpackTupleEvent2Event(log *types.Log) (*TupleTupleEvent2, error) {
 	event := "TupleEvent2"
-	if len(log.Topics) == 0 || log.Topics[0] != tuple.abi.Events[event].ID {
-		return nil, ErrTupleEvent2SignatureMismatch
+	if len(log.Topics) == 0 {
+		return nil, bind.ErrNoEventSignature
+	}
+	if log.Topics[0] != tuple.abi.Events[event].ID {
+		return nil, bind.ErrEventSignatureMismatch
 	}
 	out := new(TupleTupleEvent2)
 	if len(log.Data) > 0 {

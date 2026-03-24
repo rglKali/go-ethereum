@@ -130,17 +130,17 @@ func (NumericMethodNameE1TestEvent) ContractEventName() string {
 	return NumericMethodNameE1TestEventEventName
 }
 
-// ErrE1TestEventSignatureMismatch is returned when the event signature does not match the expected signature.
-var ErrE1TestEventSignatureMismatch = errors.New("event signature mismatch")
-
 // UnpackE1TestEventEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
 // Solidity: event _1TestEvent(address _param)
 func (numericMethodName *NumericMethodName) UnpackE1TestEventEvent(log *types.Log) (*NumericMethodNameE1TestEvent, error) {
 	event := "_1TestEvent"
-	if len(log.Topics) == 0 || log.Topics[0] != numericMethodName.abi.Events[event].ID {
-		return nil, ErrE1TestEventSignatureMismatch
+	if len(log.Topics) == 0 {
+		return nil, bind.ErrNoEventSignature
+	}
+	if log.Topics[0] != numericMethodName.abi.Events[event].ID {
+		return nil, bind.ErrEventSignatureMismatch
 	}
 	out := new(NumericMethodNameE1TestEvent)
 	if len(log.Data) > 0 {

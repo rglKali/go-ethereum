@@ -66,17 +66,17 @@ func (EventCheckerDynamic) ContractEventName() string {
 	return EventCheckerDynamicEventName
 }
 
-// ErrDynamicSignatureMismatch is returned when the event signature does not match the expected signature.
-var ErrDynamicSignatureMismatch = errors.New("event signature mismatch")
-
 // UnpackDynamicEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
 // Solidity: event dynamic(string indexed idxStr, bytes indexed idxDat, string str, bytes dat)
 func (eventChecker *EventChecker) UnpackDynamicEvent(log *types.Log) (*EventCheckerDynamic, error) {
 	event := "dynamic"
-	if len(log.Topics) == 0 || log.Topics[0] != eventChecker.abi.Events[event].ID {
-		return nil, ErrDynamicSignatureMismatch
+	if len(log.Topics) == 0 {
+		return nil, bind.ErrNoEventSignature
+	}
+	if log.Topics[0] != eventChecker.abi.Events[event].ID {
+		return nil, bind.ErrEventSignatureMismatch
 	}
 	out := new(EventCheckerDynamic)
 	if len(log.Data) > 0 {
@@ -109,17 +109,17 @@ func (EventCheckerEmpty) ContractEventName() string {
 	return EventCheckerEmptyEventName
 }
 
-// ErrEmptySignatureMismatch is returned when the event signature does not match the expected signature.
-var ErrEmptySignatureMismatch = errors.New("event signature mismatch")
-
 // UnpackEmptyEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
 // Solidity: event empty()
 func (eventChecker *EventChecker) UnpackEmptyEvent(log *types.Log) (*EventCheckerEmpty, error) {
 	event := "empty"
-	if len(log.Topics) == 0 || log.Topics[0] != eventChecker.abi.Events[event].ID {
-		return nil, ErrEmptySignatureMismatch
+	if len(log.Topics) == 0 {
+		return nil, bind.ErrNoEventSignature
+	}
+	if log.Topics[0] != eventChecker.abi.Events[event].ID {
+		return nil, bind.ErrEventSignatureMismatch
 	}
 	out := new(EventCheckerEmpty)
 	if len(log.Data) > 0 {
@@ -154,17 +154,17 @@ func (EventCheckerIndexed) ContractEventName() string {
 	return EventCheckerIndexedEventName
 }
 
-// ErrIndexedSignatureMismatch is returned when the event signature does not match the expected signature.
-var ErrIndexedSignatureMismatch = errors.New("event signature mismatch")
-
 // UnpackIndexedEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
 // Solidity: event indexed(address indexed addr, int256 indexed num)
 func (eventChecker *EventChecker) UnpackIndexedEvent(log *types.Log) (*EventCheckerIndexed, error) {
 	event := "indexed"
-	if len(log.Topics) == 0 || log.Topics[0] != eventChecker.abi.Events[event].ID {
-		return nil, ErrIndexedSignatureMismatch
+	if len(log.Topics) == 0 {
+		return nil, bind.ErrNoEventSignature
+	}
+	if log.Topics[0] != eventChecker.abi.Events[event].ID {
+		return nil, bind.ErrEventSignatureMismatch
 	}
 	out := new(EventCheckerIndexed)
 	if len(log.Data) > 0 {
@@ -199,17 +199,17 @@ func (EventCheckerMixed) ContractEventName() string {
 	return EventCheckerMixedEventName
 }
 
-// ErrMixedSignatureMismatch is returned when the event signature does not match the expected signature.
-var ErrMixedSignatureMismatch = errors.New("event signature mismatch")
-
 // UnpackMixedEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
 // Solidity: event mixed(address indexed addr, int256 num)
 func (eventChecker *EventChecker) UnpackMixedEvent(log *types.Log) (*EventCheckerMixed, error) {
 	event := "mixed"
-	if len(log.Topics) == 0 || log.Topics[0] != eventChecker.abi.Events[event].ID {
-		return nil, ErrMixedSignatureMismatch
+	if len(log.Topics) == 0 {
+		return nil, bind.ErrNoEventSignature
+	}
+	if log.Topics[0] != eventChecker.abi.Events[event].ID {
+		return nil, bind.ErrEventSignatureMismatch
 	}
 	out := new(EventCheckerMixed)
 	if len(log.Data) > 0 {
@@ -244,17 +244,17 @@ func (EventCheckerUnnamed) ContractEventName() string {
 	return EventCheckerUnnamedEventName
 }
 
-// ErrUnnamedSignatureMismatch is returned when the event signature does not match the expected signature.
-var ErrUnnamedSignatureMismatch = errors.New("event signature mismatch")
-
 // UnpackUnnamedEvent is the Go binding that unpacks the event data emitted
 // by contract.
 //
 // Solidity: event unnamed(uint256 indexed arg0, uint256 indexed arg1)
 func (eventChecker *EventChecker) UnpackUnnamedEvent(log *types.Log) (*EventCheckerUnnamed, error) {
 	event := "unnamed"
-	if len(log.Topics) == 0 || log.Topics[0] != eventChecker.abi.Events[event].ID {
-		return nil, ErrUnnamedSignatureMismatch
+	if len(log.Topics) == 0 {
+		return nil, bind.ErrNoEventSignature
+	}
+	if log.Topics[0] != eventChecker.abi.Events[event].ID {
+		return nil, bind.ErrEventSignatureMismatch
 	}
 	out := new(EventCheckerUnnamed)
 	if len(log.Data) > 0 {
